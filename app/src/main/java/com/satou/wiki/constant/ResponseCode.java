@@ -56,6 +56,15 @@ public enum ResponseCode {
         this.code = code;
     }
 
+    public static String getMsgByCode(int code) {
+        for (ResponseCode responseCode : ResponseCode.values()) {
+            if (responseCode.getCode() == code) {
+                return responseCode.msg;
+            }
+        }
+        return null;
+    }
+
     public String getMsg() {
         return msg;
     }

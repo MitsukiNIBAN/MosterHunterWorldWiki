@@ -16,7 +16,7 @@
             android:layout_height="56dp"
             android:layout_centerHorizontal="true"
             android:layout_margin="8dp"
-            android:src="@mipmap/logo" />
+            android:src="@mipmap/ic_logo" />
 
         <LinearLayout
             android:layout_width="wrap_content"

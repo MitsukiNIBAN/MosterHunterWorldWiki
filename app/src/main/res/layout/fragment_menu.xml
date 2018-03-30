@@ -2,26 +2,31 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp"
+    android:layout_marginTop="8dp"
     android:orientation="vertical">
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#ebebeb" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:text="Wiki讯息"
-        android:textColor="#000000" />
+        android:background="#cdcdcd"
+        android:layout_marginBottom="4dp"/>
 
     <LinearLayout
+        android:id="@+id/ll_wiki_msg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
         android:orientation="vertical"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp">
+        android:padding="8dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Wiki讯息"
+            android:textColor="#000000" />
 
         <TextView
             android:id="@+id/tv_wiki_msg"
@@ -42,22 +47,25 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginTop="8dp"
-        android:background="#ebebeb" />
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        android:background="#cdcdcd" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:text="游戏讯息"
-        android:textColor="#000000" />
 
     <LinearLayout
+        android:id="@+id/ll_game_msg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
         android:orientation="vertical"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp">
+        android:padding="8dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="游戏讯息"
+            android:textColor="#000000" />
 
         <TextView
             android:id="@+id/tv_game_msg"
@@ -78,17 +86,8 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginTop="8dp"
-        android:background="#ebebeb" />
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        android:background="#cdcdcd" />
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="test" />
-
-    <android.support.v7.app.AlertController.RecycleListView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    </android.support.v7.app.AlertController.RecycleListView>
 </LinearLayout>

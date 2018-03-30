@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.greenrobot.eventbus.EventBus;
+
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
@@ -32,5 +34,21 @@ public abstract class BaseFragment extends Fragment {
         unbinder.unbind();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (registerEventBus())
+            EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (registerEventBus())
+            EventBus.getDefault().unregister(this);
+    }
+
     public abstract int getContentViewId();
+
+    protected abstract boolean registerEventBus();
 }
