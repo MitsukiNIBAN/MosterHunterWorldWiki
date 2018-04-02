@@ -8,20 +8,23 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.satou.wiki.R;
+import com.satou.wiki.adapter.ModuleListAdapter;
 import com.satou.wiki.base.BaseFragment;
 import com.satou.wiki.constant.TypeCode;
 import com.satou.wiki.data.MainPageDataAnalysis;
-import com.satou.wiki.data.entity.GameUpdate;
 import com.satou.wiki.data.entity.MessageEvent;
-import com.satou.wiki.data.entity.WikiLog;
+import com.satou.wiki.data.entity.Unit;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -32,10 +35,9 @@ import butterknife.OnClick;
 
 public class MenuFragment extends BaseFragment {
 
-    private WikiLog wikiLog;
-    private GameUpdate gameUpdate;
-
-
+    private List<Unit> wikiLog;
+    private Unit gameUpdate;
+    
     @BindView(R.id.tv_wiki_msg)
     TextView wikiMsgTextView;
     @BindView(R.id.tv_wiki_msg_time)
@@ -44,6 +46,8 @@ public class MenuFragment extends BaseFragment {
     TextView gameMsgTextView;
     @BindView(R.id.tv_game_msg_time)
     TextView gameTimeTextView;
+    @BindView(R.id.ll_module)
+    LinearLayout moduleLinearLayout;
 
     @Override
     public int getContentViewId() {
@@ -60,12 +64,21 @@ public class MenuFragment extends BaseFragment {
         MessageEvent stickyEvent = EventBus.getDefault().removeStickyEvent(MessageEvent.class);
         if (stickyEvent != null) {
             if (stickyEvent.getId() == TypeCode.TOTAL) {
-                gameUpdate = MainPageDataAnalysis.getGameUpdate((String) stickyEvent.getContent());
-                wikiLog = MainPageDataAnalysis.getWikiMsg((String) stickyEvent.getContent());
-                wikiMsgTextView.setText(wikiLog.getMessageLsit().get(0).getMsgContent());
-                wikiTimeTextView.setText(wikiLog.getMessageLsit().get(0).getTime());
-                gameMsgTextView.setText(gameUpdate.getDate());
-                Log.e("===================", wikiLog.getMessageLsit().size() + "");
+                MainPageDataAnalysis.initMainData((String) stickyEvent.getContent());
+                gameUpdate = MainPageDataAnalysis.getGameUpdate();
+                wikiLog = MainPageDataAnalysis.getWikiMsg();
+                wikiMsgTextView.setText(wikiLog.get(0).getContent());
+                wikiTimeTextView.setText(wikiLog.get(0).getTime());
+                gameMsgTextView.setText(gameUpdate.getTitle());
+                moduleLinearLayout.removeAllViews();
+                for (Unit unit : MainPageDataAnalysis.getTitleList()){
+                    if (unit.getItemType() == ModuleListAdapter.FIRST_LEVEL){
+                        if (unit.getContent().equals("搜尋")) continue;
+                        View view = mInflater.inflate(R.layout.item_module_btn, null);
+                        ((Button) view.findViewById(R.id.btn_title)).setText(unit.getContent() + "");
+                        moduleLinearLayout.addView(view);
+                    }
+                }
             }
         }
     }
@@ -80,7 +93,7 @@ public class MenuFragment extends BaseFragment {
                 fragmentTransaction.show(fragment);
                 fragmentTransaction.commit();
 
-                MessageEvent messageEvent = new MessageEvent<WikiLog>();
+                MessageEvent messageEvent = new MessageEvent<List<Unit>>();
                 messageEvent.setContent(wikiLog);
                 messageEvent.setId(TypeCode.WIKILOG);
                 EventBus.getDefault().post(messageEvent);
@@ -98,7 +111,7 @@ public class MenuFragment extends BaseFragment {
                 fragmentTransaction.show(fragment);
                 fragmentTransaction.commit();
 
-                MessageEvent messageEvent = new MessageEvent<WikiLog>();
+                MessageEvent messageEvent = new MessageEvent<Unit>();
                 messageEvent.setContent(gameUpdate);
                 messageEvent.setId(TypeCode.GAMEUPDATE);
                 EventBus.getDefault().post(messageEvent);

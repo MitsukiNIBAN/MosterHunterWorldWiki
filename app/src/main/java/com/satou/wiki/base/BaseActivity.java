@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -36,6 +38,12 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.setContentView(R.layout.activity_base);
         inflater = LayoutInflater.from(this);
         searchBar = findViewById(R.id.et_search_word);
+        searchBar.setOnKeyListener((view, i, keyEvent) -> {
+            if (i == KeyEvent.KEYCODE_NUMPAD_ENTER && keyEvent.getAction() == KeyEvent.ACTION_UP) {
+                doSomething();
+            }
+            return false;
+        });
         swipeRefreshLayout = findViewById(R.id.srl_load);
         swipeRefreshLayout.setEnabled(false);
         swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent, R.color.colorPrimaryDark);
@@ -112,6 +120,10 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected abstract boolean registerEventBus();
 
     protected void init() {
+
+    }
+
+    protected void doSomething(){
 
     }
 

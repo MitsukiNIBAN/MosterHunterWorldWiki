@@ -19,10 +19,12 @@ import butterknife.Unbinder;
 public abstract class BaseFragment extends Fragment {
 
     private Unbinder unbinder;
+    protected LayoutInflater mInflater;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        mInflater = inflater;
         View view = inflater.inflate(getContentViewId(), container, false);
         unbinder = ButterKnife.bind(this, view);//绑定framgent
         return view;

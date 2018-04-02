@@ -8,4 +8,5 @@ public class TypeCode {
     public static int TOTAL = 0;
     public static int WIKILOG = 1;
     public static int GAMEUPDATE = 2;
+    public static int SEARCHKEYWORD = 3;
 }

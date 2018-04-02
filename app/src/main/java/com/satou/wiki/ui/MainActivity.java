@@ -1,5 +1,6 @@
 package com.satou.wiki.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -65,7 +66,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-        if (!menuFragment.isHidden()) {
+        if (!menuFragment.isHidden() || swipeRefreshLayout.isRefreshing()) {
             if ((System.currentTimeMillis() - exitTime) > 2000) {
                 Toast.makeText(getApplicationContext(), "再次点击返回退出应用", Toast.LENGTH_SHORT).show();
                 exitTime = System.currentTimeMillis();
@@ -130,4 +131,15 @@ public class MainActivity extends BaseActivity {
                 });
     }
 
+    @Override
+    protected void doSomething() {
+        Intent intent = new Intent();
+        intent.setClass(this, SearchActivity.class);
+        startActivity(intent);
+
+        MessageEvent kw = new MessageEvent<String>();
+        kw.setId(TypeCode.SEARCHKEYWORD);
+        kw.setContent(searchBar.getText() + "");
+        EventBus.getDefault().postSticky(kw);
+    }
 }

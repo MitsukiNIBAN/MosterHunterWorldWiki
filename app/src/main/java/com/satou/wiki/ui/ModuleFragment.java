@@ -15,11 +15,8 @@ import com.satou.wiki.R;
 import com.satou.wiki.adapter.ModuleListAdapter;
 import com.satou.wiki.base.BaseFragment;
 import com.satou.wiki.constant.TypeCode;
-import com.satou.wiki.data.entity.GameUpdate;
-import com.satou.wiki.data.entity.Individual;
-import com.satou.wiki.data.entity.Message;
 import com.satou.wiki.data.entity.MessageEvent;
-import com.satou.wiki.data.entity.WikiLog;
+import com.satou.wiki.data.entity.Unit;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -63,24 +60,11 @@ public class ModuleFragment extends BaseFragment {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void setData(MessageEvent messageEvent){
         if (messageEvent.getId() == TypeCode.WIKILOG){
-            List<Individual> individuals = new ArrayList<>();
-            WikiLog wikiLog = (WikiLog) messageEvent.getContent();
-
-            for (Message msg : wikiLog.getMessageLsit()){
-                Individual i = new Individual();
-                i.setItemType(ModuleListAdapter.CONTENT);
-                i.setContent(msg.getMsgContent());
-                individuals.add(i);
-            }
-            moduleListAdapter.refreshData(individuals);
+            List<Unit> wikiLog = (List<Unit>) messageEvent.getContent();
+            moduleListAdapter.refreshData(wikiLog);
         }else if (messageEvent.getId() == TypeCode.GAMEUPDATE){
-            List<Individual> individuals = new ArrayList<>();
-            GameUpdate gameUpdate = (GameUpdate) messageEvent.getContent();
-            Individual i = new Individual();
-            i.setItemType(ModuleListAdapter.CONTENT);
-            i.setContent(gameUpdate.getContent());
-            individuals.add(i);
-            moduleListAdapter.refreshData(individuals);
+            Unit gameUpdate = (Unit) messageEvent.getContent();
+            moduleListAdapter.refreshData(gameUpdate);
         }
     }
 

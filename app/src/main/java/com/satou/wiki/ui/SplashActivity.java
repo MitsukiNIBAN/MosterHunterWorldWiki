@@ -21,6 +21,6 @@ public class SplashActivity extends AppCompatActivity {
         new Handler().postDelayed(() ->
                 startActivity(new Intent(this, MainActivity.class),
                         ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
-                , 2000);
+                , 500);
     }
 }
