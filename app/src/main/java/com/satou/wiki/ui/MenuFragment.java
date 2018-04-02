@@ -37,7 +37,7 @@ public class MenuFragment extends BaseFragment {
 
     private List<Unit> wikiLog;
     private Unit gameUpdate;
-    
+
     @BindView(R.id.tv_wiki_msg)
     TextView wikiMsgTextView;
     @BindView(R.id.tv_wiki_msg_time)
@@ -61,24 +61,24 @@ public class MenuFragment extends BaseFragment {
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void setData(MessageEvent messageEvent) {
-        MessageEvent stickyEvent = EventBus.getDefault().removeStickyEvent(MessageEvent.class);
-        if (stickyEvent != null) {
-            if (stickyEvent.getId() == TypeCode.TOTAL) {
-                MainPageDataAnalysis.initMainData((String) stickyEvent.getContent());
+        if (messageEvent != null) {
+            if (messageEvent.getId() == TypeCode.TOTAL) {
+                MainPageDataAnalysis.initMainData((String) messageEvent.getContent());
                 gameUpdate = MainPageDataAnalysis.getGameUpdate();
                 wikiLog = MainPageDataAnalysis.getWikiMsg();
                 wikiMsgTextView.setText(wikiLog.get(0).getContent());
                 wikiTimeTextView.setText(wikiLog.get(0).getTime());
                 gameMsgTextView.setText(gameUpdate.getTitle());
                 moduleLinearLayout.removeAllViews();
-                for (Unit unit : MainPageDataAnalysis.getTitleList()){
-                    if (unit.getItemType() == ModuleListAdapter.FIRST_LEVEL){
+                for (Unit unit : MainPageDataAnalysis.getTitleList()) {
+                    if (unit.getItemType() == ModuleListAdapter.FIRST_LEVEL) {
                         if (unit.getContent().equals("搜尋")) continue;
                         View view = mInflater.inflate(R.layout.item_module_btn, null);
                         ((Button) view.findViewById(R.id.btn_title)).setText(unit.getContent() + "");
                         moduleLinearLayout.addView(view);
                     }
                 }
+                EventBus.getDefault().removeAllStickyEvents();
             }
         }
     }

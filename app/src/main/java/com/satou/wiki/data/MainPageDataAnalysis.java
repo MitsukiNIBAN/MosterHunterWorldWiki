@@ -1,6 +1,7 @@
 package com.satou.wiki.data;
 
 import android.util.Log;
+import android.widget.ListView;
 
 import com.satou.wiki.adapter.ModuleListAdapter;
 import com.satou.wiki.data.entity.Unit;
@@ -83,7 +84,7 @@ public class MainPageDataAnalysis {
         return gameUpdate;
     }
 
-    public static List<Unit> getTitleList(){
+    public static List<Unit> getTitleList() {
         return titleList;
     }
 

@@ -1,5 +1,6 @@
 package com.satou.wiki.ui;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -18,6 +19,8 @@ import com.satou.wiki.data.entity.MessageEvent;
 import com.satou.wiki.http.RequestHelper;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -34,8 +37,7 @@ public class MainActivity extends BaseActivity {
     private ModuleFragment moduleFragment;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void init() {
         fragmentManager = getSupportFragmentManager();
         menuFragment = new MenuFragment();
         moduleFragment = new ModuleFragment();
@@ -133,13 +135,16 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void doSomething() {
-        Intent intent = new Intent();
-        intent.setClass(this, SearchActivity.class);
-        startActivity(intent);
+        if (searchBar.getText().toString().length() > 0) {
+            MessageEvent kw = new MessageEvent<String>();
+            kw.setId(TypeCode.SEARCHKEYWORD);
+            kw.setContent(searchBar.getText() + "");
+            EventBus.getDefault().postSticky(kw);
 
-        MessageEvent kw = new MessageEvent<String>();
-        kw.setId(TypeCode.SEARCHKEYWORD);
-        kw.setContent(searchBar.getText() + "");
-        EventBus.getDefault().postSticky(kw);
+            Intent intent = new Intent();
+            intent.setClass(this, SearchActivity.class);
+            startActivity(intent);
+        }
     }
+
 }

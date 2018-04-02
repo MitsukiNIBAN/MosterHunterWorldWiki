@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="8dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingTop="8dp">
 
     <TextView
         android:id="@+id/tv_back"
@@ -14,10 +14,11 @@
         android:gravity="center"
         android:padding="8dp"
         android:text="返回" />
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#ebebeb"/>
+        android:background="#ebebeb" />
 
     <ListView
         android:id="@+id/lv_data"
@@ -27,5 +28,15 @@
         android:paddingRight="8dp">
 
     </ListView>
+
+    <TextView
+        android:id="@+id/tv_empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text=""
+        android:textSize="24sp"
+        android:visibility="gone" />
 
 </LinearLayout>

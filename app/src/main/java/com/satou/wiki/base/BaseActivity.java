@@ -1,10 +1,12 @@
 package com.satou.wiki.base;
 
+import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,8 +14,14 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+
 import com.satou.wiki.R;
+import com.satou.wiki.constant.TypeCode;
+import com.satou.wiki.data.entity.MessageEvent;
+import com.satou.wiki.ui.SearchActivity;
+
 import org.greenrobot.eventbus.EventBus;
+
 import butterknife.ButterKnife;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
@@ -39,7 +47,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         inflater = LayoutInflater.from(this);
         searchBar = findViewById(R.id.et_search_word);
         searchBar.setOnKeyListener((view, i, keyEvent) -> {
-            if (i == KeyEvent.KEYCODE_NUMPAD_ENTER && keyEvent.getAction() == KeyEvent.ACTION_UP) {
+            if (i == KeyEvent.KEYCODE_ENTER && keyEvent.getAction() == KeyEvent.ACTION_UP) {
                 doSomething();
             }
             return false;
@@ -64,6 +72,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
+        searchBar.setText("");
     }
 
     @Override
@@ -125,7 +134,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected void doSomething(){
 
-    }
+    };
 
     protected void onRefresh() {
 

@@ -22,8 +22,8 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:background="@null"
-        android:ellipsize="end"
         android:hint="搜索"
+        android:imeOptions="actionSearch"
         android:inputType="text"
         android:lines="1" />
 </android.support.v7.widget.CardView>
