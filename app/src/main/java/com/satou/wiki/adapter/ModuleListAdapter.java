@@ -1,6 +1,7 @@
 package com.satou.wiki.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -105,20 +106,31 @@ public class ModuleListAdapter extends BaseAdapter {
         //item的样式
         switch (getItemViewType(i)) {
             case FIRST_LEVEL:
+                viewHolder.content.setTextSize(20);
+                viewHolder.content.setBackgroundColor(Color.parseColor("#d2d2d2"));
+                viewHolder.content.setClickable(false);
                 break;
             case SECOND_LEVEL:
+                viewHolder.content.setTextSize(18);
+                viewHolder.content.setBackgroundColor(Color.parseColor("#d9d9d9"));
+                viewHolder.content.setClickable(false);
                 break;
             case CONTENT:
-                if (!data.get(i).getTime().equals("null")){
+                if (!data.get(i).getTime().equals("null")) {
                     viewHolder.time.setText(data.get(i).getTime() + "");
-                }else {
+                } else {
                     viewHolder.time.setText("");
                 }
+                viewHolder.content.setTextSize(14);
+                break;
+            case THIRD_LEVEL:
+                viewHolder.content.setTextSize(16);
+                viewHolder.content.setBackgroundColor(Color.parseColor("#e6e6e6"));
+                viewHolder.content.setClickable(false);
                 break;
             default:
                 break;
         }
-
         return convertView;
     }
 

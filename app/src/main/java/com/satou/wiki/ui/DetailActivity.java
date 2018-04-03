@@ -1,24 +1,21 @@
 package com.satou.wiki.ui;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
+import android.view.ViewGroup;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.lzy.okgo.model.Response;
 import com.satou.wiki.R;
-import com.satou.wiki.adapter.ModuleListAdapter;
 import com.satou.wiki.base.BaseActivity;
 import com.satou.wiki.constant.Address;
 import com.satou.wiki.constant.TypeCode;
-import com.satou.wiki.data.MainPageDataAnalysis;
-import com.satou.wiki.data.SearchPageDataAnalysis;
+import com.satou.wiki.data.DetailPageDataAnalysis;
 import com.satou.wiki.data.entity.MessageEvent;
 import com.satou.wiki.data.entity.Unit;
 import com.satou.wiki.http.RequestHelper;
@@ -26,51 +23,32 @@ import com.satou.wiki.http.RequestHelper;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+import org.w3c.dom.Text;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 /**
- * Created by Mitsuki on 2018/4/2.
+ * Created by Mitsuki on 2018/4/3.
  */
 
-public class SearchActivity extends BaseActivity {
+public class DetailActivity extends BaseActivity {
 
-    @BindView(R.id.lv_data)
-    ListView listView;
-    @BindView(R.id.tv_empty)
-    TextView emptyView;
-
-    private String keyword;
-
-    private ModuleListAdapter adapter;
+    private Unit unit;
+    @BindView(R.id.tv_content)
+    TextView content;
 
     @Override
     protected void init() {
-        adapter = new ModuleListAdapter(this);
-        listView.setEmptyView(emptyView);
-        listView.setAdapter(adapter);
-        listView.setOnItemClickListener((adapterView, view, i, l) -> {
-            Unit unit = (Unit) adapter.getItem(i);
-            if (unit.getUrl().equals("null")) return;
-            MessageEvent uM = new MessageEvent<String>();
-            uM.setId(TypeCode.DETAIL);
-            uM.setContent(unit);
-            EventBus.getDefault().postSticky(uM);
-
-            Intent intent = new Intent();
-            intent.setClass(this, DetailActivity.class);
-            startActivity(intent);
-        });
+        searchBar.setVisibility(View.GONE);
     }
 
     @Override
     protected int getLayout() {
-        return R.layout.activity_search;
+        return R.layout.activity_detail;
     }
 
     @Override
@@ -78,34 +56,21 @@ public class SearchActivity extends BaseActivity {
         return true;
     }
 
-    @OnClick(R.id.tv_back)
-    public void close() {
-        finishAfterTransition();
-    }
-
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void loadData(MessageEvent messageEvent) {
         if (messageEvent != null) {
-            if (messageEvent.getId() == TypeCode.SEARCHKEYWORD) {
-                String kw = (String) messageEvent.getContent();
-                searchBar.setText(kw);
-                search(kw);
+            if (messageEvent.getId() == TypeCode.DETAIL) {
+                unit = (Unit) messageEvent.getContent();
+                searchBar.setText("");
+//                Log.e("unit", unit.toString());
+                loadInfo(unit.getUrl());
                 EventBus.getDefault().removeAllStickyEvents();
             }
         }
     }
 
-    @Override
-    protected void doSomething() {
-        String str = searchBar.getText().toString() + "";
-        if (str.length() > 0) {
-            keyword = str;
-            search(str);
-        }
-    }
-
-    private void search(String str) {
-        RequestHelper.getInstance().get(Address.URL + "search?q=" + str)
+    private void loadInfo(String str) {
+        RequestHelper.getInstance().get(Address.URL + str)
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe(disposable -> swipeRefreshLayout.setRefreshing(true))
                 .observeOn(AndroidSchedulers.mainThread())
@@ -119,15 +84,19 @@ public class SearchActivity extends BaseActivity {
                     @Override
                     public void onNext(Response<String> stringResponse) {
                         Log.e("MainActivity", "onNext");
-                        adapter.refreshData(SearchPageDataAnalysis
-                                .getSearchData(stringResponse.body()));
+                        //此处往webview中加入内容
+//                        Log.e("sadfa", DetailPageDataAnalysis.getDetail(stringResponse.body()));stringResponse
+//                        webView.loadData(DetailPageDataAnalysis.getDetail(stringResponse.body()),
+//                                "text/html", "utf-8");
+                        content.setText(Html.fromHtml(DetailPageDataAnalysis.getDetail(stringResponse.body())));
+
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         Log.e("MainActivity", "onError");
                         swipeRefreshLayout.setRefreshing(false);
-                        emptyView.setText("请求失败，下拉刷新重试");
+                        Toast.makeText(DetailActivity.this, "请求失败，下拉刷新重试", Toast.LENGTH_SHORT).show();
                         swipeRefreshLayout.setEnabled(true);
                     }
 
@@ -136,13 +105,21 @@ public class SearchActivity extends BaseActivity {
                         Log.e("MainActivity", "onComplete");
                         swipeRefreshLayout.setRefreshing(false);
                         swipeRefreshLayout.setEnabled(false);
-                        emptyView.setText("没有任何结果");
                     }
                 });
     }
 
     @Override
-    protected void onRefresh() {
-        search(keyword);
+    protected void onDestroy() {
+//        if (webView != null) {
+//            webView.loadDataWithBaseURL(null, "", "text/html", "utf-8", null);
+//            webView.clearHistory();
+//
+//            ((ViewGroup) webView.getParent()).removeView(webView);
+//            webView.destroy();
+//            webView = null;
+//        }
+
+        super.onDestroy();
     }
 }

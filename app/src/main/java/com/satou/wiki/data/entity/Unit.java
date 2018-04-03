@@ -59,4 +59,16 @@ public class Unit {
     public void setItemType(int itemType) {
         this.itemType = itemType;
     }
+
+    @Override
+    public String toString() {
+        return "Unit{" +
+                "time='" + time + '\'' +
+                ", content='" + content + '\'' +
+                ", url='" + url + '\'' +
+                ", tag='" + tag + '\'' +
+                ", title='" + title + '\'' +
+                ", itemType=" + itemType +
+                '}';
+    }
 }

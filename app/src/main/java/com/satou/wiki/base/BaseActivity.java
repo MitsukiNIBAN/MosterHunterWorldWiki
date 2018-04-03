@@ -49,6 +49,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         searchBar.setOnKeyListener((view, i, keyEvent) -> {
             if (i == KeyEvent.KEYCODE_ENTER && keyEvent.getAction() == KeyEvent.ACTION_UP) {
                 doSomething();
+                return true;
             }
             return false;
         });
@@ -109,7 +110,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        finish();
+        finishAfterTransition();
     }
 
     public void addDisposable(Disposable disposable) {
