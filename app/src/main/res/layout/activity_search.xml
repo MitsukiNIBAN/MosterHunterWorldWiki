@@ -13,7 +13,8 @@
         android:clickable="true"
         android:gravity="center"
         android:padding="8dp"
-        android:text="返回" />
+        android:text="返回"
+        android:visibility="gone"/>
 
     <View
         android:layout_width="match_parent"

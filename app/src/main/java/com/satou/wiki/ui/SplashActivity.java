@@ -19,7 +19,7 @@ public class SplashActivity extends AppCompatActivity {
         Application.getInstance().addActivity(this);
         setContentView(R.layout.splash);
         new Handler().postDelayed(() ->
-                startActivity(new Intent(this, MainActivity.class),
+                startActivity(new Intent(this, SearchActivity.class),
                         ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
                 , 500);
     }

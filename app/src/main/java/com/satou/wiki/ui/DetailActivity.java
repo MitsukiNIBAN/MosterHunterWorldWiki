@@ -77,13 +77,13 @@ public class DetailActivity extends BaseActivity {
                 .subscribe(new Observer<Response<String>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-                        Log.e("MainActivity", "onSubscribe");
+                        Log.e("DetailActivity", "onSubscribe");
                         addDisposable(d);
                     }
 
                     @Override
                     public void onNext(Response<String> stringResponse) {
-                        Log.e("MainActivity", "onNext");
+                        Log.e("DetailActivity", "onNext");
                         //此处往webview中加入内容
 //                        Log.e("sadfa", DetailPageDataAnalysis.getDetail(stringResponse.body()));stringResponse
 //                        webView.loadData(DetailPageDataAnalysis.getDetail(stringResponse.body()),
@@ -94,7 +94,7 @@ public class DetailActivity extends BaseActivity {
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e("MainActivity", "onError");
+                        Log.e("DetailActivity", "onError");
                         swipeRefreshLayout.setRefreshing(false);
                         Toast.makeText(DetailActivity.this, "请求失败，下拉刷新重试", Toast.LENGTH_SHORT).show();
                         swipeRefreshLayout.setEnabled(true);
@@ -102,7 +102,7 @@ public class DetailActivity extends BaseActivity {
 
                     @Override
                     public void onComplete() {
-                        Log.e("MainActivity", "onComplete");
+                        Log.e("DetailActivity", "onComplete");
                         swipeRefreshLayout.setRefreshing(false);
                         swipeRefreshLayout.setEnabled(false);
                     }

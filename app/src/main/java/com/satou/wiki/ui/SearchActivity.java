@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.lzy.okgo.model.Response;
 import com.satou.wiki.R;
 import com.satou.wiki.adapter.ModuleListAdapter;
+import com.satou.wiki.base.Application;
 import com.satou.wiki.base.BaseActivity;
 import com.satou.wiki.constant.Address;
 import com.satou.wiki.constant.TypeCode;
@@ -48,6 +49,7 @@ public class SearchActivity extends BaseActivity {
     private String keyword;
 
     private ModuleListAdapter adapter;
+    private long exitTime = 0;
 
     @Override
     protected void init() {
@@ -75,25 +77,25 @@ public class SearchActivity extends BaseActivity {
 
     @Override
     protected boolean registerEventBus() {
-        return true;
+        return false;
     }
 
-    @OnClick(R.id.tv_back)
-    public void close() {
-        finishAfterTransition();
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-    public void loadData(MessageEvent messageEvent) {
-        if (messageEvent != null) {
-            if (messageEvent.getId() == TypeCode.SEARCHKEYWORD) {
-                String kw = (String) messageEvent.getContent();
-                searchBar.setText(kw);
-                search(kw);
-                EventBus.getDefault().removeAllStickyEvents();
-            }
-        }
-    }
+//    @OnClick(R.id.tv_back)
+//    public void close() {
+//        finishAfterTransition();
+//    }
+//
+//    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+//    public void loadData(MessageEvent messageEvent) {
+//        if (messageEvent != null) {
+//            if (messageEvent.getId() == TypeCode.SEARCHKEYWORD) {
+//                String kw = (String) messageEvent.getContent();
+//                searchBar.setText(kw);
+//                search(kw);
+//                EventBus.getDefault().removeAllStickyEvents();
+//            }
+//        }
+//    }
 
     @Override
     protected void doSomething() {
@@ -112,20 +114,20 @@ public class SearchActivity extends BaseActivity {
                 .subscribe(new Observer<Response<String>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-                        Log.e("MainActivity", "onSubscribe");
+                        Log.i("SearchActivity", "onSubscribe");
                         addDisposable(d);
                     }
 
                     @Override
                     public void onNext(Response<String> stringResponse) {
-                        Log.e("MainActivity", "onNext");
+                        Log.i("SearchActivity", "onNext");
                         adapter.refreshData(SearchPageDataAnalysis
                                 .getSearchData(stringResponse.body()));
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e("MainActivity", "onError");
+                        Log.i("SearchActivity", "onError");
                         swipeRefreshLayout.setRefreshing(false);
                         emptyView.setText("请求失败，下拉刷新重试");
                         swipeRefreshLayout.setEnabled(true);
@@ -133,7 +135,7 @@ public class SearchActivity extends BaseActivity {
 
                     @Override
                     public void onComplete() {
-                        Log.e("MainActivity", "onComplete");
+                        Log.i("SearchActivity", "onComplete");
                         swipeRefreshLayout.setRefreshing(false);
                         swipeRefreshLayout.setEnabled(false);
                         emptyView.setText("没有任何结果");
@@ -144,5 +146,15 @@ public class SearchActivity extends BaseActivity {
     @Override
     protected void onRefresh() {
         search(keyword);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if ((System.currentTimeMillis() - exitTime) > 2000) {
+            Toast.makeText(getApplicationContext(), "再次点击退出应用", Toast.LENGTH_SHORT).show();
+            exitTime = System.currentTimeMillis();
+        } else {
+            Application.getInstance().exit();
+        }
     }
 }
