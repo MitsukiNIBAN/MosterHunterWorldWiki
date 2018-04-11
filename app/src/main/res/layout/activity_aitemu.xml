@@ -25,10 +25,11 @@
             android:textSize="16sp" />
 
         <TextView
+            android:id="@+id/tv_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="爆炸菇"
+            android:text=""
             android:textColor="#000000"
             android:textSize="16sp" />
     </LinearLayout>
@@ -48,10 +49,11 @@
             android:textSize="16sp" />
 
         <TextView
+            android:id="@+id/tv_rare"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="2"
+            android:text=""
             android:textColor="#000000"
             android:textSize="16sp" />
     </LinearLayout>
@@ -71,10 +73,11 @@
             android:textSize="16sp" />
 
         <TextView
+            android:id="@+id/tv_carry"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="20"
+            android:text=""
             android:textColor="#000000"
             android:textSize="16sp" />
     </LinearLayout>
@@ -94,10 +97,11 @@
             android:textSize="16sp" />
 
         <TextView
+            android:id="@+id/tv_price"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="6"
+            android:text=""
             android:textColor="#000000"
             android:textSize="16sp" />
     </LinearLayout>
@@ -117,11 +121,11 @@
             android:textSize="16sp" />
 
         <TextView
+            android:id="@+id/tv_info"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="秘藏高溫的稀有香菇。
-調合炸彈所需爆藥的必要素材。"
+            android:text=""
             android:textColor="#000000"
             android:textSize="16sp" />
     </LinearLayout>
@@ -131,6 +135,7 @@
         android:layout_height="0.1dp"
         android:background="#cccccc" />
     <ListView
+        android:id="@+id/lv_data"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

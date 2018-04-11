@@ -53,6 +53,11 @@ public abstract class BaseActivity extends AppCompatActivity {
             }
             return false;
         });
+        if (setSearchVisibility()){
+            searchBar.setVisibility(View.VISIBLE);
+        }else{
+            searchBar.setVisibility(View.GONE);
+        }
         swipeRefreshLayout = findViewById(R.id.srl_load);
         swipeRefreshLayout.setEnabled(false);
         swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent, R.color.colorPrimaryDark);
@@ -61,6 +66,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         contentView.removeAllViews();
         contentView.addView(inflater.inflate(getLayout(), null), new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        contentView.setVisibility(View.GONE);
         ButterKnife.bind(this);
         init();
     }
@@ -129,13 +135,25 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected abstract boolean registerEventBus();
 
+    protected void setContentVisibility(boolean b){
+        if (b){
+            contentView.setVisibility(View.VISIBLE);
+        }else {
+            contentView.setVisibility(View.GONE);
+        }
+    }
+
+    protected boolean setSearchVisibility(){
+        return true;
+    }
+
     protected void init() {
 
     }
 
     protected void doSomething(){
 
-    };
+    }
 
     protected void onRefresh() {
 

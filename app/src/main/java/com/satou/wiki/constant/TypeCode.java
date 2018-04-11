@@ -10,4 +10,5 @@ public class TypeCode {
     public static int GAMEUPDATE = 2;
     public static int SEARCHKEYWORD = 3;
     public static int DETAIL = 4;
+    public static int AITEMU = 5;
 }

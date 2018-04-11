@@ -58,6 +58,10 @@ public class ModuleListAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
+    public List<Unit> getData() {
+        return data;
+    }
+
     @Override
     public int getCount() {
         return data.size();

@@ -1,12 +1,7 @@
 package com.satou.wiki.ui;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,19 +12,18 @@ import com.satou.wiki.adapter.ModuleListAdapter;
 import com.satou.wiki.base.Application;
 import com.satou.wiki.base.BaseActivity;
 import com.satou.wiki.constant.Address;
+import com.satou.wiki.constant.PageType;
 import com.satou.wiki.constant.TypeCode;
-import com.satou.wiki.data.MainPageDataAnalysis;
 import com.satou.wiki.data.SearchPageDataAnalysis;
 import com.satou.wiki.data.entity.MessageEvent;
 import com.satou.wiki.data.entity.Unit;
 import com.satou.wiki.http.RequestHelper;
 
 import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
+
+import java.util.List;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -56,18 +50,30 @@ public class SearchActivity extends BaseActivity {
         adapter = new ModuleListAdapter(this);
         listView.setEmptyView(emptyView);
         listView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
         listView.setOnItemClickListener((adapterView, view, i, l) -> {
             Unit unit = (Unit) adapter.getItem(i);
             if (unit.getUrl().equals("null")) return;
             MessageEvent uM = new MessageEvent<String>();
-            uM.setId(TypeCode.DETAIL);
-            uM.setContent(unit);
-            EventBus.getDefault().postSticky(uM);
 
             Intent intent = new Intent();
-            intent.setClass(this, DetailActivity.class);
+            switch (selectClass(adapter.getData(), unit)) {
+                case AITEMU:
+                    uM.setId(TypeCode.AITEMU);
+                    intent.setClass(this, AitemuActivity.class);
+                    break;
+                case DEFAULT:
+                default:
+                    uM.setId(TypeCode.DETAIL);
+                    intent.setClass(this, DetailActivity.class);
+                    break;
+            }
+
+            uM.setContent(unit);
+            EventBus.getDefault().postSticky(uM);
             startActivity(intent);
         });
+        setContentVisibility(true);
     }
 
     @Override
@@ -156,5 +162,20 @@ public class SearchActivity extends BaseActivity {
         } else {
             Application.getInstance().exit();
         }
+    }
+
+    private PageType selectClass(List<Unit> unitList, Unit u) {
+        PageType type = PageType.DEFAULT;
+        for (Unit unit : unitList) {
+            if (unit.getItemType() == ModuleListAdapter.FIRST_LEVEL) {
+                if (unit.getContent().equals("道具")) {
+                    type = PageType.AITEMU;
+                }
+            } else {
+                if (unit.equals(u))
+                    return type;
+            }
+        }
+        return type;
     }
 }
