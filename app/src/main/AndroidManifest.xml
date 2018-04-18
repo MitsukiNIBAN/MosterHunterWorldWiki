@@ -35,6 +35,9 @@
         <activity
             android:name=".ui.AitemuActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.BukiActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

@@ -62,6 +62,10 @@ public class SearchActivity extends BaseActivity {
                     uM.setId(TypeCode.AITEMU);
                     intent.setClass(this, AitemuActivity.class);
                     break;
+                case BUKI:
+                    uM.setId(TypeCode.BUKI);
+                    intent.setClass(this, BukiActivity.class);
+                    break;
                 case DEFAULT:
                 default:
                     uM.setId(TypeCode.DETAIL);
@@ -170,6 +174,10 @@ public class SearchActivity extends BaseActivity {
             if (unit.getItemType() == ModuleListAdapter.FIRST_LEVEL) {
                 if (unit.getContent().equals("道具")) {
                     type = PageType.AITEMU;
+                }else if (unit.getContent().equals("武器")){
+                    type = PageType.BUKI;
+                }else {
+                    type = PageType.DEFAULT;
                 }
             } else {
                 if (unit.equals(u))

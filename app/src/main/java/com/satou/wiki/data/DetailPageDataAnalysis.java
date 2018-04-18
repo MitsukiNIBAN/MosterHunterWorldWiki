@@ -1,6 +1,7 @@
 package com.satou.wiki.data;
 
 import com.satou.wiki.data.entity.Aitemu;
+import com.satou.wiki.data.entity.Buki;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -104,6 +105,11 @@ public class DetailPageDataAnalysis {
         }
 
         return aitemu;
+    }
+
+    public static Buki getBuki(String str){
+        Buki buki = new Buki();
+        return buki;
     }
 
     private static Element getContent(String str) {

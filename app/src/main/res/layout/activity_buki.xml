@@ -25,6 +25,7 @@
             android:textSize="16sp" />
 
         <TextView
+            android:id="@+id/tv_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -53,6 +54,7 @@
                 android:textSize="16sp" />
 
             <TextView
+                android:id="@+id/tv_rare"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -74,6 +76,7 @@
                 android:textSize="16sp" />
 
             <TextView
+                android:id="@+id/tv_set"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -104,6 +107,7 @@
                 android:textSize="16sp" />
 
             <TextView
+                android:id="@+id/tv_attack"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -125,6 +129,7 @@
                 android:textSize="16sp" />
 
             <TextView
+                android:id="@+id/tv_crit"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -155,6 +160,7 @@
                 android:textSize="16sp" />
 
             <TextView
+                android:id="@+id/tv_defense"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -176,6 +182,7 @@
                 android:textSize="16sp" />
 
             <TextView
+                android:id="@+id/tv_attr"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -197,6 +204,7 @@
 
 
         <TextView
+            android:id="@+id/tv_sharpness"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clickable="true"
@@ -206,6 +214,7 @@
             android:textSize="16sp" />
 
         <TextView
+            android:id="@+id/tv_timbre"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clickable="true"
@@ -215,6 +224,7 @@
             android:textSize="16sp" />
 
         <TextView
+            android:id="@+id/tv_bullet"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clickable="true"
@@ -238,6 +248,7 @@
                 android:textSize="16sp" />
 
             <TextView
+                android:id="@+id/tv_bug"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -261,6 +272,7 @@
                 android:textSize="16sp" />
 
             <TextView
+                android:id="@+id/tv_bottle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -284,6 +296,7 @@
                 android:textSize="16sp" />
 
             <TextView
+                android:id="@+id/tv_shelling"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -301,6 +314,7 @@
         android:background="#cccccc" />
 
     <ListView
+        android:id="@+id/listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
