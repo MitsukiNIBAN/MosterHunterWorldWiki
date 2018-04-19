@@ -1,12 +1,15 @@
 package com.satou.wiki.ui;
 
 import android.util.Log;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.lzy.okgo.model.Response;
 import com.satou.wiki.R;
+import com.satou.wiki.adapter.ModuleListAdapter;
 import com.satou.wiki.base.BaseActivity;
 import com.satou.wiki.constant.Address;
 import com.satou.wiki.constant.TypeCode;
@@ -31,7 +34,7 @@ import io.reactivex.schedulers.Schedulers;
  * Created by Mitsuki on 2018/4/18.
  */
 
-public class BukiActivity extends BaseActivity{
+public class BukiActivity extends BaseActivity {
 
     private Unit unit;
 
@@ -63,6 +66,16 @@ public class BukiActivity extends BaseActivity{
     TextView shellingView;
     @BindView(R.id.listview)
     ListView listView;
+    @BindView(R.id.ll_bug)
+    LinearLayout bugLayout;
+    @BindView(R.id.ll_bottle)
+    LinearLayout bottleLayout;
+    @BindView(R.id.ll_shelling)
+    LinearLayout shellingLayout;
+    @BindView(R.id.ll_timbre)
+    LinearLayout timbreLayout;
+
+    private ModuleListAdapter adapter;
 
     @Override
     protected int getLayout() {
@@ -72,6 +85,12 @@ public class BukiActivity extends BaseActivity{
     @Override
     protected boolean registerEventBus() {
         return true;
+    }
+
+    @Override
+    protected void init() {
+        adapter = new ModuleListAdapter(this);
+        listView.setAdapter(adapter);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
@@ -124,8 +143,55 @@ public class BukiActivity extends BaseActivity{
                 });
     }
 
-    private void showData(Buki buki){
+    private void showData(Buki buki) {
+        if (buki != null) {
+            nameView.setText(buki.getName());
+            rareView.setText(buki.getRare());
+            setView.setText(buki.getSet());
+            attackView.setText(buki.getAttack());
+            critView.setText(buki.getCrit());
+            defenseView.setText(buki.getDefense());
+            attrView.setText(buki.getAttr());
+            if (buki.getSharpness().equals("null")) {
+                sharpnessView.setVisibility(View.GONE);
+            } else {
+                sharpnessView.setVisibility(View.VISIBLE);
+            }
+            if (buki.getBullet().equals("null")) {
+                bulletView.setVisibility(View.GONE);
+            } else {
+                bulletView.setVisibility(View.VISIBLE);
+            }
+            if (buki.getBug().equals("null")) {
+                bugLayout.setVisibility(View.GONE);
+            } else {
+                bugLayout.setVisibility(View.VISIBLE);
+                bugView.setText(buki.getBug());
+            }
+            if (buki.getBottle().equals("null")) {
+                bottleLayout.setVisibility(View.GONE);
+            } else {
+                bottleLayout.setVisibility(View.VISIBLE);
+                bottleView.setText(buki.getBottle());
+            }
+            if (buki.getTimbre().equals("null")) {
+                timbreLayout.setVisibility(View.GONE);
+            } else {
+                timbreLayout.setVisibility(View.VISIBLE);
+                timbreView.setText(buki.getTimbre());
+            }
+            if (buki.getShelling().equals("null")) {
+                shellingLayout.setVisibility(View.GONE);
+            } else {
+                shellingLayout.setVisibility(View.VISIBLE);
+                shellingView.setText(buki.getShelling());
+            }
 
+            if (buki.getDataList() != null) {
+                adapter.refreshData(buki.getDataList());
+            }
+
+        }
     }
 
     @Override

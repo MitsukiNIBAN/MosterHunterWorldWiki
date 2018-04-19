@@ -90,23 +90,6 @@ public class SearchActivity extends BaseActivity {
         return false;
     }
 
-//    @OnClick(R.id.tv_back)
-//    public void close() {
-//        finishAfterTransition();
-//    }
-//
-//    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-//    public void loadData(MessageEvent messageEvent) {
-//        if (messageEvent != null) {
-//            if (messageEvent.getId() == TypeCode.SEARCHKEYWORD) {
-//                String kw = (String) messageEvent.getContent();
-//                searchBar.setText(kw);
-//                search(kw);
-//                EventBus.getDefault().removeAllStickyEvents();
-//            }
-//        }
-//    }
-
     @Override
     protected void doSomething() {
         String str = searchBar.getText().toString() + "";

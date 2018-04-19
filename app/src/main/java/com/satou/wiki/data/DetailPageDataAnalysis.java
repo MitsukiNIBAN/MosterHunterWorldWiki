@@ -1,12 +1,19 @@
 package com.satou.wiki.data;
 
+import android.util.Log;
+
+import com.satou.wiki.adapter.ModuleListAdapter;
 import com.satou.wiki.data.entity.Aitemu;
 import com.satou.wiki.data.entity.Buki;
+import com.satou.wiki.data.entity.Unit;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Mitsuki on 2018/4/3.
@@ -46,6 +53,7 @@ public class DetailPageDataAnalysis {
 
     public static Aitemu getAitemu(String str) {
         Aitemu aitemu = new Aitemu();
+        List<Unit> unitList = new ArrayList<>();
         Element content = getContent(str);
         Elements table = content.getElementsByClass("item-table");
         if (table != null && table.first() != null) {
@@ -104,11 +112,89 @@ public class DetailPageDataAnalysis {
             }
         }
 
+        if (content.getElementsByClass("grids").first() != null) {
+            Elements items = content.getElementsByClass("grids").first()
+                    .getElementsByClass("item");
+
+            for (Element element : items) {
+                Unit unit1 = new Unit();
+                Element th = element.getElementsByTag("th").first();
+                unit1.setItemType(ModuleListAdapter.SECOND_LEVEL);
+                unit1.setContent(th.text());
+                unitList.add(unit1);
+                Unit unit2 = new Unit();
+                Element td = element.getElementsByTag("td").first();
+                unit2.setItemType(ModuleListAdapter.CONTENT);
+                String s = td.text();
+                s = s.replace("%", "%\n");
+                s = s.replace("個", "個\n");
+                s = s.replace("採集點", "採集\n");
+                s = s.replace("採集", "採集\n");
+                unit2.setContent(s);
+                unitList.add(unit2);
+            }
+
+            aitemu.setData(unitList);
+        }
+
+
         return aitemu;
     }
 
-    public static Buki getBuki(String str){
+    public static Buki getBuki(String str) {
         Buki buki = new Buki();
+        List<Unit> unitList = new ArrayList<>();
+        Element content = getContent(str);
+        Elements table = content.getElementsByClass("simple-table");
+
+        Element baseInfo = table.first();
+        Elements tr = baseInfo.getElementsByTag("tr");
+        for (Element item : tr) {
+            if (item.getElementsByTag("th").first().text().equals("名")) {
+                buki.setName(item.getElementsByTag("td").first().text());
+            }
+            if (item.getElementsByTag("th").first().text().equals("稀有度")) {
+                buki.setRare(item.getElementsByTag("td").first().text());
+            }
+            if (item.getElementsByTag("th").first().text().equals("鑲嵌槽")) {
+                buki.setSet(item.getElementsByTag("td").first().text());
+            }
+            if (item.getElementsByTag("th").first().text().equals("攻擊")) {
+                buki.setAttack(item.getElementsByTag("td").first().text());
+            }
+            if (item.getElementsByTag("th").first().text().equals("會心")) {
+                buki.setCrit(item.getElementsByTag("td").first().text());
+            }
+            if (item.getElementsByTag("th").first().text().equals("防禦")) {
+                buki.setDefense(item.getElementsByTag("td").first().text());
+            }
+            if (item.getElementsByTag("th").first().text().equals("屬性")) {
+                buki.setAttr(item.getElementsByTag("td").first().text());
+            }
+            if (item.getElementsByTag("th").first().text().equals("系統")) {
+                buki.setBug(item.getElementsByTag("td").first().text());
+            }
+            if (item.getElementsByTag("th").first().text().equals("炮擊")) {
+                buki.setShelling(item.getElementsByTag("td").first().text());
+            }
+            if (item.getElementsByTag("th").first().text().equals("裝著瓶")) {
+                String bottleStr = "";
+                for (Element bottle : item.getElementsByTag("td").first().getElementsByClass("l1")) {
+                    bottleStr = bottleStr + " " + bottle.text();
+                }
+                buki.setBottle(bottleStr);
+            }
+            if (item.getElementsByTag("th").first().text().equals("音色")) {
+                String timbreStr = "";
+                for (Element timbre : item.getElementsByTag("span")) {
+                    timbreStr = timbreStr + " " + timbre.text();
+                }
+                buki.setTimbre(timbreStr);
+            }
+            if (item.getElementsByTag("th").first().text().equals("銳利度")) {
+
+            }
+        }
         return buki;
     }
 

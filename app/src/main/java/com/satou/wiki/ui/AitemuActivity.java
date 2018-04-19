@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import com.lzy.okgo.model.Response;
 import com.satou.wiki.R;
+import com.satou.wiki.adapter.ModuleListAdapter;
 import com.satou.wiki.base.BaseActivity;
 import com.satou.wiki.constant.Address;
 import com.satou.wiki.constant.TypeCode;
@@ -48,6 +49,7 @@ public class AitemuActivity extends BaseActivity {
     @BindView(R.id.lv_data)
     ListView dataView;
 
+    private ModuleListAdapter adapter;
 
     @Override
     protected int getLayout() {
@@ -61,7 +63,8 @@ public class AitemuActivity extends BaseActivity {
 
     @Override
     protected void init() {
-
+        adapter = new ModuleListAdapter(this);
+        dataView.setAdapter(adapter);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
@@ -121,6 +124,9 @@ public class AitemuActivity extends BaseActivity {
             carryView.setText(aitemu.getCarry());
             priceView.setText(aitemu.getPrice());
             infoView.setText(aitemu.getInfo());
+            if (aitemu.getData() != null){
+                adapter.refreshData(aitemu.getData());
+            }
         }
     }
 

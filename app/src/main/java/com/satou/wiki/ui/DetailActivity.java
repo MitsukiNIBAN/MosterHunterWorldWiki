@@ -108,18 +108,4 @@ public class DetailActivity extends BaseActivity {
                     }
                 });
     }
-
-    @Override
-    protected void onDestroy() {
-//        if (webView != null) {
-//            webView.loadDataWithBaseURL(null, "", "text/html", "utf-8", null);
-//            webView.clearHistory();
-//
-//            ((ViewGroup) webView.getParent()).removeView(webView);
-//            webView.destroy();
-//            webView = null;
-//        }
-
-        super.onDestroy();
-    }
 }

@@ -29,7 +29,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="鐵刀Ⅰ"
+            android:text="-"
             android:textColor="#000000"
             android:textSize="16sp" />
     </LinearLayout>
@@ -58,7 +58,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="1"
+                android:text="-"
                 android:textColor="#000000"
                 android:textSize="16sp" />
         </LinearLayout>
@@ -111,7 +111,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="264"
+                android:text="-"
                 android:textColor="#000000"
                 android:textSize="16sp" />
         </LinearLayout>
@@ -214,16 +214,6 @@
             android:textSize="16sp" />
 
         <TextView
-            android:id="@+id/tv_timbre"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            android:padding="8dp"
-            android:text="音色  请点击查看 ===> 押す！"
-            android:textColor="#000000"
-            android:textSize="16sp" />
-
-        <TextView
             android:id="@+id/tv_bullet"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -234,6 +224,7 @@
             android:textSize="16sp" />
 
         <LinearLayout
+            android:id="@+id/ll_bug"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -258,6 +249,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/ll_bottle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -282,6 +274,32 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/ll_timbre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="8dp">
+
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:text="音色："
+                android:textColor="#000000"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tv_timbre"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="-"
+                android:textColor="#000000"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_shelling"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
