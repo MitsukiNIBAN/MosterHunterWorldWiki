@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import com.lzy.okgo.model.Response;
 import com.satou.wiki.R;
+import com.satou.wiki.adapter.BukiAdapter;
 import com.satou.wiki.adapter.ModuleListAdapter;
 import com.satou.wiki.base.BaseActivity;
 import com.satou.wiki.constant.Address;
@@ -37,49 +38,14 @@ import io.reactivex.schedulers.Schedulers;
 public class BukiActivity extends BaseActivity {
 
     private Unit unit;
+    @BindView(R.id.lv_data)
+    ListView dataView;
 
-    @BindView(R.id.tv_name)
-    TextView nameView;
-    @BindView(R.id.tv_rare)
-    TextView rareView;
-    @BindView(R.id.tv_set)
-    TextView setView;
-    @BindView(R.id.tv_attack)
-    TextView attackView;
-    @BindView(R.id.tv_crit)
-    TextView critView;
-    @BindView(R.id.tv_defense)
-    TextView defenseView;
-    @BindView(R.id.tv_attr)
-    TextView attrView;
-    @BindView(R.id.tv_sharpness)
-    TextView sharpnessView;
-    @BindView(R.id.tv_timbre)
-    TextView timbreView;
-    @BindView(R.id.tv_bullet)
-    TextView bulletView;
-    @BindView(R.id.tv_bug)
-    TextView bugView;
-    @BindView(R.id.tv_bottle)
-    TextView bottleView;
-    @BindView(R.id.tv_shelling)
-    TextView shellingView;
-    @BindView(R.id.listview)
-    ListView listView;
-    @BindView(R.id.ll_bug)
-    LinearLayout bugLayout;
-    @BindView(R.id.ll_bottle)
-    LinearLayout bottleLayout;
-    @BindView(R.id.ll_shelling)
-    LinearLayout shellingLayout;
-    @BindView(R.id.ll_timbre)
-    LinearLayout timbreLayout;
-
-    private ModuleListAdapter adapter;
+    private BukiAdapter adapter;
 
     @Override
     protected int getLayout() {
-        return R.layout.activity_buki;
+        return R.layout.activity_list_data;
     }
 
     @Override
@@ -89,8 +55,8 @@ public class BukiActivity extends BaseActivity {
 
     @Override
     protected void init() {
-        adapter = new ModuleListAdapter(this);
-        listView.setAdapter(adapter);
+        adapter = new BukiAdapter(this);
+        dataView.setAdapter(adapter);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
@@ -99,7 +65,6 @@ public class BukiActivity extends BaseActivity {
             if (messageEvent.getId() == TypeCode.BUKI) {
                 unit = (Unit) messageEvent.getContent();
                 searchBar.setText("");
-//                Log.e("unit", unit.toString());
                 loadInfo(unit.getUrl());
                 EventBus.getDefault().removeAllStickyEvents();
             }
@@ -145,52 +110,7 @@ public class BukiActivity extends BaseActivity {
 
     private void showData(Buki buki) {
         if (buki != null) {
-            nameView.setText(buki.getName());
-            rareView.setText(buki.getRare());
-            setView.setText(buki.getSet());
-            attackView.setText(buki.getAttack());
-            critView.setText(buki.getCrit());
-            defenseView.setText(buki.getDefense());
-            attrView.setText(buki.getAttr());
-            if (buki.getSharpness().equals("null")) {
-                sharpnessView.setVisibility(View.GONE);
-            } else {
-                sharpnessView.setVisibility(View.VISIBLE);
-            }
-            if (buki.getBullet().equals("null")) {
-                bulletView.setVisibility(View.GONE);
-            } else {
-                bulletView.setVisibility(View.VISIBLE);
-            }
-            if (buki.getBug().equals("null")) {
-                bugLayout.setVisibility(View.GONE);
-            } else {
-                bugLayout.setVisibility(View.VISIBLE);
-                bugView.setText(buki.getBug());
-            }
-            if (buki.getBottle().equals("null")) {
-                bottleLayout.setVisibility(View.GONE);
-            } else {
-                bottleLayout.setVisibility(View.VISIBLE);
-                bottleView.setText(buki.getBottle());
-            }
-            if (buki.getTimbre().equals("null")) {
-                timbreLayout.setVisibility(View.GONE);
-            } else {
-                timbreLayout.setVisibility(View.VISIBLE);
-                timbreView.setText(buki.getTimbre());
-            }
-            if (buki.getShelling().equals("null")) {
-                shellingLayout.setVisibility(View.GONE);
-            } else {
-                shellingLayout.setVisibility(View.VISIBLE);
-                shellingView.setText(buki.getShelling());
-            }
-
-            if (buki.getDataList() != null) {
-                adapter.refreshData(buki.getDataList());
-            }
-
+            adapter.setBuki(buki);
         }
     }
 

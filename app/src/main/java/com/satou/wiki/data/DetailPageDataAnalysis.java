@@ -2,9 +2,11 @@ package com.satou.wiki.data;
 
 import android.util.Log;
 
+import com.satou.wiki.adapter.AitemuAdapter;
 import com.satou.wiki.adapter.ModuleListAdapter;
 import com.satou.wiki.data.entity.Aitemu;
 import com.satou.wiki.data.entity.Buki;
+import com.satou.wiki.data.entity.Sharpness;
 import com.satou.wiki.data.entity.Unit;
 
 import org.jsoup.Jsoup;
@@ -119,18 +121,19 @@ public class DetailPageDataAnalysis {
             for (Element element : items) {
                 Unit unit1 = new Unit();
                 Element th = element.getElementsByTag("th").first();
-                unit1.setItemType(ModuleListAdapter.SECOND_LEVEL);
+                unit1.setItemType(AitemuAdapter.TITLE);
                 unit1.setContent(th.text());
                 unitList.add(unit1);
                 Unit unit2 = new Unit();
                 Element td = element.getElementsByTag("td").first();
-                unit2.setItemType(ModuleListAdapter.CONTENT);
+                unit2.setItemType(AitemuAdapter.CONTENT);
                 String s = td.text();
                 s = s.replace("%", "%\n");
                 s = s.replace("個", "個\n");
                 s = s.replace("採集點", "採集\n");
                 s = s.replace("採集", "採集\n");
                 unit2.setContent(s);
+//                Log.e("getAitemu", unit2.getContent());
                 unitList.add(unit2);
             }
 
@@ -149,6 +152,7 @@ public class DetailPageDataAnalysis {
 
         Element baseInfo = table.first();
         Elements tr = baseInfo.getElementsByTag("tr");
+        buki.setAttr("-");
         for (Element item : tr) {
             if (item.getElementsByTag("th").first().text().equals("名")) {
                 buki.setName(item.getElementsByTag("td").first().text());
@@ -192,9 +196,39 @@ public class DetailPageDataAnalysis {
                 buki.setTimbre(timbreStr);
             }
             if (item.getElementsByTag("th").first().text().equals("銳利度")) {
-
+                Elements sharp = item.getElementsByClass("sharpness");
+                List<Sharpness> sharpnessList = new ArrayList<>();
+                for (int i = 0; i < sharp.size(); i++) {
+                    Sharpness sharpness = new Sharpness();
+                    sharpness.setName("匠+" + i);
+                    String sharpnessStr = "";
+                    for (Element element : sharp.get(i).getElementsByTag("div")) {
+                        if (element.html().length() > 0) continue;
+                        sharpnessStr = sharpnessStr + element.attr("style") + ",";
+                    }
+                    sharpness.setSharpness(sharpnessStr);
+                    sharpnessList.add(sharpness);
+                }
+                buki.setSharpness(sharpnessList);
             }
         }
+
+        for (int i = 1; i < table.size(); i++){
+            for (Element trIntable : table.get(i).getElementsByTag("tr")){
+                Unit unit1 = new Unit();
+                Element th = trIntable.getElementsByTag("th").first();
+                unit1.setItemType(AitemuAdapter.TITLE);
+                unit1.setContent(th.text());
+                unitList.add(unit1);
+                Unit unit2 = new Unit();
+                Element td = trIntable.getElementsByTag("td").first();
+                unit2.setItemType(AitemuAdapter.CONTENT);
+                String s = td.text();
+                unit2.setContent(s);
+                unitList.add(unit2);
+            }
+        }
+        buki.setDataList(unitList);
         return buki;
     }
 

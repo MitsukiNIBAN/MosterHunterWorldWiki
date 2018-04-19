@@ -1,7 +1,9 @@
 package com.satou.wiki.ui;
 
+import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -124,6 +126,9 @@ public class SearchActivity extends BaseActivity {
                         swipeRefreshLayout.setRefreshing(false);
                         emptyView.setText("请求失败，下拉刷新重试");
                         swipeRefreshLayout.setEnabled(true);
+                        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                        inputMethodManager.hideSoftInputFromWindow(SearchActivity.this.getCurrentFocus().getWindowToken()
+                                , InputMethodManager.HIDE_NOT_ALWAYS);
                     }
 
                     @Override
@@ -132,6 +137,9 @@ public class SearchActivity extends BaseActivity {
                         swipeRefreshLayout.setRefreshing(false);
                         swipeRefreshLayout.setEnabled(false);
                         emptyView.setText("没有任何结果");
+                        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                        inputMethodManager.hideSoftInputFromWindow(SearchActivity.this.getCurrentFocus().getWindowToken()
+                                , InputMethodManager.HIDE_NOT_ALWAYS);
                     }
                 });
     }
@@ -157,9 +165,9 @@ public class SearchActivity extends BaseActivity {
             if (unit.getItemType() == ModuleListAdapter.FIRST_LEVEL) {
                 if (unit.getContent().equals("道具")) {
                     type = PageType.AITEMU;
-                }else if (unit.getContent().equals("武器")){
+                } else if (unit.getContent().equals("武器")) {
                     type = PageType.BUKI;
-                }else {
+                } else {
                     type = PageType.DEFAULT;
                 }
             } else {

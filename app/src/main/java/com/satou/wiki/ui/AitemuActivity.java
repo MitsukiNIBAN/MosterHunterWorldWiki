@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import com.lzy.okgo.model.Response;
 import com.satou.wiki.R;
+import com.satou.wiki.adapter.AitemuAdapter;
 import com.satou.wiki.adapter.ModuleListAdapter;
 import com.satou.wiki.base.BaseActivity;
 import com.satou.wiki.constant.Address;
@@ -35,25 +36,15 @@ import io.reactivex.schedulers.Schedulers;
 public class AitemuActivity extends BaseActivity {
 
     private Unit unit;
-
-    @BindView(R.id.tv_name)
-    TextView nameView;
-    @BindView(R.id.tv_rare)
-    TextView rareView;
-    @BindView(R.id.tv_carry)
-    TextView carryView;
-    @BindView(R.id.tv_price)
-    TextView priceView;
-    @BindView(R.id.tv_info)
-    TextView infoView;
     @BindView(R.id.lv_data)
     ListView dataView;
 
     private ModuleListAdapter adapter;
+    private AitemuAdapter aitemuAdapter;
 
     @Override
     protected int getLayout() {
-        return R.layout.activity_aitemu;
+        return R.layout.activity_list_data;
     }
 
     @Override
@@ -64,7 +55,8 @@ public class AitemuActivity extends BaseActivity {
     @Override
     protected void init() {
         adapter = new ModuleListAdapter(this);
-        dataView.setAdapter(adapter);
+        aitemuAdapter = new AitemuAdapter(this);
+        dataView.setAdapter(aitemuAdapter);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
@@ -119,14 +111,7 @@ public class AitemuActivity extends BaseActivity {
 
     private void showData(Aitemu aitemu){
         if (aitemu != null){
-            nameView.setText(aitemu.getName());
-            rareView.setText(aitemu.getRare());
-            carryView.setText(aitemu.getCarry());
-            priceView.setText(aitemu.getPrice());
-            infoView.setText(aitemu.getInfo());
-            if (aitemu.getData() != null){
-                adapter.refreshData(aitemu.getData());
-            }
+            aitemuAdapter.setData(aitemu);
         }
     }
 

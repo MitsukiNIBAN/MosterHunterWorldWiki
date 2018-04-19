@@ -14,7 +14,7 @@ public class Buki {
     private String crit;
     private String defense;
     private String attr;
-    private String sharpness;
+    private List<Sharpness> sharpness;
     private String timbre;
     private String bullet;
     private String bug;
@@ -78,11 +78,11 @@ public class Buki {
         this.attr = attr;
     }
 
-    public String getSharpness() {
-        return sharpness + "";
+    public List<Sharpness> getSharpness() {
+        return sharpness;
     }
 
-    public void setSharpness(String sharpness) {
+    public void setSharpness(List<Sharpness> sharpness) {
         this.sharpness = sharpness;
     }
 

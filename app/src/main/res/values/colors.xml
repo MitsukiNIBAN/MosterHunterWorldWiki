@@ -7,4 +7,13 @@
     <color name="L1">#d2d2d2</color>
     <color name="L2">#d9d9d9</color>
     <color name="L3">#e6e6e6</color>
+
+    <color name="tip_red">#F44336</color>
+    <color name="tip_orange">#FF9800</color>
+    <color name="tip_yellow">#FFEB3B</color>
+    <color name="tip_green">#4CAF50</color>
+    <color name="tip_blue">#2196F3</color>
+    <color name="tip_white">#ffffff</color>
+    <color name="tip_purple">#9C27B0</color>
+    <color name="tip_gray">#424242</color>
 </resources>
