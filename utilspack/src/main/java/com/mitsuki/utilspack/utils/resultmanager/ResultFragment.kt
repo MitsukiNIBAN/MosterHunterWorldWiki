@@ -1,18 +1,25 @@
 package com.mitsuki.utilspack.utils.resultmanager
 
+import android.Manifest
 import android.content.Intent
 import android.os.Bundle
+import android.support.v4.app.ActivityCompat
 import android.support.v4.app.Fragment
 import android.util.SparseArray
+
 
 class ResultFragment : Fragment() {
 
     private var callbacks = SparseArray<(requestCode: Int, resultCode: Int, data: Intent?) -> Unit>()
+    private var permissionCallbacks =
+        SparseArray<(requestCode: Int, permissions: Array<String>, grantResults: IntArray) -> Unit>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         retainInstance = true
     }
+
+    /******************************************************************************************************************/
 
     fun startActivityForResult(
         intent: Intent,
@@ -24,7 +31,24 @@ class ResultFragment : Fragment() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        callbacks.get(requestCode).invoke(requestCode, resultCode, data)
+        callbacks.get(requestCode)?.invoke(requestCode, resultCode, data)
+        callbacks.remove(requestCode)
+    }
+
+    /******************************************************************************************************************/
+
+    fun requestPermissions(
+        permissions: Array<out String>,
+        requestCode: Int,
+        callback: (requestCode: Int, permissions: Array<String>, grantResults: IntArray) -> Unit
+    ) {
+        permissionCallbacks.put(requestCode, callback)
+        requestPermissions(permissions, requestCode)
+    }
+
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        permissionCallbacks.get(requestCode)?.invoke(requestCode, permissions, grantResults)
+        permissionCallbacks.remove(requestCode)
     }
 }

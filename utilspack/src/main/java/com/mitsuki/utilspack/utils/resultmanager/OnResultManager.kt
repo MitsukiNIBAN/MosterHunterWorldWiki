@@ -47,4 +47,23 @@ object OnResultManager {
     }
 
 
+    fun requestPermissions(
+        fragment: Fragment,
+        permissions: Array<out String>,
+        requestCode: Int,
+        callback: (requestCode: Int, permissions: Array<String>, grantResults: IntArray) -> Unit
+    ) {
+        this.requestPermissions((fragment.activity ?: return), permissions, requestCode, callback)
+    }
+
+    fun requestPermissions(
+        activity: FragmentActivity,
+        permissions: Array<out String>,
+        requestCode: Int,
+        callback: (requestCode: Int, permissions: Array<String>, grantResults: IntArray) -> Unit
+    ) {
+        getOnResultFragment(activity).requestPermissions(permissions, requestCode, callback)
+    }
+
+
 }
