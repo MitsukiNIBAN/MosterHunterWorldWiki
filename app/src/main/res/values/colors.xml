@@ -3,4 +3,14 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+
+
+    <color name="color_rarity_1">#AFABAF</color>
+    <color name="color_rarity_2">#ffffff</color>
+    <color name="color_rarity_3">#F4F800</color>
+    <color name="color_rarity_4">#7AD38A</color>
+    <color name="color_rarity_5">#97ECF9</color>
+    <color name="color_rarity_6">#85A9FE</color>
+    <color name="color_rarity_7">#7556E4</color>
+    <color name="color_rarity_8">#F79758</color>
 </resources>

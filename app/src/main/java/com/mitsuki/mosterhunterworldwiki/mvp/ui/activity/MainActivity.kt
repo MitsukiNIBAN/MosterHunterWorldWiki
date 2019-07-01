@@ -1,6 +1,5 @@
-package com.mitsuki.mosterhunterworldwiki
+package com.mitsuki.mosterhunterworldwiki.mvp.ui.activity
 
-import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.Snackbar
@@ -11,9 +10,8 @@ import android.support.v4.widget.DrawerLayout
 import android.support.design.widget.NavigationView
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
-import android.util.Log
 import android.view.Menu
-import com.mitsuki.utilspack.utils.resultmanager.OnResultManager
+import com.mitsuki.mosterhunterworldwiki.R
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 

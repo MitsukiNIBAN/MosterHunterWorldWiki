@@ -1,7 +1,7 @@
 package com.mitsuki.simplemvp.base
 
 
-class BaseModel : IModel {
+open class BaseModel : IModel {
     override fun onDestroy() {
     }
 }

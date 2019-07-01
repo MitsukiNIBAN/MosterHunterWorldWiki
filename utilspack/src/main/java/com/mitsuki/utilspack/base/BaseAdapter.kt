@@ -13,7 +13,7 @@ abstract class BaseAdapter<B, T : RecyclerView.ViewHolder>(var context: Context)
     private val VIEW_TYPE_EMPTY = Integer.MIN_VALUE
 
     private var mData: MutableList<B> = ArrayList()
-    private var mContext = context
+    protected var mContext = context
     private var emptyLayout: Int = 0
     private var useEmpty = false
 
