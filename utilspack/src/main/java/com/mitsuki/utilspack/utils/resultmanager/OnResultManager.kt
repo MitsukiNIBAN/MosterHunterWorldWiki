@@ -3,17 +3,17 @@ package com.mitsuki.utilspack.utils.resultmanager
 import android.app.Activity
 import android.content.Intent
 import android.service.carrier.CarrierMessagingService
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 
 object OnResultManager {
     var tag = javaClass.simpleName
 
-    private fun findOnResultFragment(activity: FragmentActivity): ResultFragment? =
+    private fun findOnResultFragment(activity: androidx.fragment.app.FragmentActivity): ResultFragment? =
         activity.supportFragmentManager.findFragmentByTag(tag)?.let { it as ResultFragment }
 
 
-    private fun getOnResultFragment(activity: FragmentActivity): ResultFragment {
+    private fun getOnResultFragment(activity: androidx.fragment.app.FragmentActivity): ResultFragment {
         findOnResultFragment(activity)?.let {
             return it
         }
@@ -29,7 +29,7 @@ object OnResultManager {
     }
 
     fun startActivityForResult(
-        fragment: Fragment,
+        fragment: androidx.fragment.app.Fragment,
         intent: Intent,
         requestCode: Int,
         callback: (requestCode: Int, resultCode: Int, data: Intent?) -> Unit
@@ -38,7 +38,7 @@ object OnResultManager {
     }
 
     fun startActivityForResult(
-        activity: FragmentActivity,
+        activity: androidx.fragment.app.FragmentActivity,
         intent: Intent,
         requestCode: Int,
         callback: (requestCode: Int, resultCode: Int, data: Intent?) -> Unit
@@ -48,7 +48,7 @@ object OnResultManager {
 
 
     fun requestPermissions(
-        fragment: Fragment,
+        fragment: androidx.fragment.app.Fragment,
         permissions: Array<out String>,
         requestCode: Int,
         callback: (requestCode: Int, permissions: Array<String>, grantResults: IntArray) -> Unit
@@ -57,7 +57,7 @@ object OnResultManager {
     }
 
     fun requestPermissions(
-        activity: FragmentActivity,
+        activity: androidx.fragment.app.FragmentActivity,
         permissions: Array<out String>,
         requestCode: Int,
         callback: (requestCode: Int, permissions: Array<String>, grantResults: IntArray) -> Unit

@@ -1,14 +1,14 @@
 package com.mitsuki.utilspack.base
 
 import android.content.Context
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 
 import java.util.ArrayList
 
-abstract class BaseAdapter<B, T : RecyclerView.ViewHolder>(var context: Context) :
-    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+abstract class BaseAdapter<B, T : androidx.recyclerview.widget.RecyclerView.ViewHolder>(var context: Context) :
+    androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>() {
 
     private val VIEW_TYPE_EMPTY = Integer.MIN_VALUE
 
@@ -17,13 +17,13 @@ abstract class BaseAdapter<B, T : RecyclerView.ViewHolder>(var context: Context)
     private var emptyLayout: Int = 0
     private var useEmpty = false
 
-    final override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): RecyclerView.ViewHolder {
+    final override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): androidx.recyclerview.widget.RecyclerView.ViewHolder {
         return if (getItemViewType(i) == VIEW_TYPE_EMPTY && emptyLayout != 0 && useEmpty) {
             onCreateEmptyViewHolder(viewGroup, i)
         } else onCreateMyViewHolder(viewGroup, i)
     }
 
-    final override fun onBindViewHolder(t: RecyclerView.ViewHolder, i: Int) {
+    final override fun onBindViewHolder(t: androidx.recyclerview.widget.RecyclerView.ViewHolder, i: Int) {
         if (getItemViewType(i) == VIEW_TYPE_EMPTY) {
             onBindEmptyViewHolder(t, i)
         } else {
@@ -35,14 +35,14 @@ abstract class BaseAdapter<B, T : RecyclerView.ViewHolder>(var context: Context)
 
     abstract fun onBindMyViewHolder(t: T, i: Int)
 
-    fun onCreateEmptyViewHolder(viewGroup: ViewGroup, i: Int): RecyclerView.ViewHolder {
+    fun onCreateEmptyViewHolder(viewGroup: ViewGroup, i: Int): androidx.recyclerview.widget.RecyclerView.ViewHolder {
         val emptyView = LayoutInflater.from(mContext).inflate(emptyLayout, viewGroup, false)
-        return object : RecyclerView.ViewHolder(emptyView) {
+        return object : androidx.recyclerview.widget.RecyclerView.ViewHolder(emptyView) {
 
         }
     }
 
-    fun onBindEmptyViewHolder(t: RecyclerView.ViewHolder, i: Int) {
+    fun onBindEmptyViewHolder(t: androidx.recyclerview.widget.RecyclerView.ViewHolder, i: Int) {
 
     }
 
