@@ -1,12 +1,10 @@
 package com.mitsuki.simplemvp.base
 
-import android.content.Context
+import org.kodein.di.Kodein
 
-abstract class BasePresenter<V : IView, M : IModel>(var context: Context, var view: V) {
-    var mView: V = view
-    var mModel: M? = getModel()
-
-    abstract fun getModel(): M
+abstract class BasePresenter<V : IView, M : IModel>(kodein: Kodein) {
+    abstract val mView: V
+    open val mModel: M? = null
 
     fun onDestroy() {
         mModel?.onDestroy()

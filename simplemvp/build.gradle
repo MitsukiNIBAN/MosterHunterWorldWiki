@@ -26,14 +26,23 @@ android {
 }
 
 dependencies {
+    def kodein_version = "6.3.3"
+
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation 'androidx.appcompat:appcompat:1.0.0'
+    implementation 'androidx.appcompat:appcompat:1.0.2'
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.1.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    api "io.reactivex.rxjava2:rxkotlin:2.4.0"
+    api 'io.reactivex.rxjava2:rxandroid:2.1.1'
+
+    api "org.kodein.di:kodein-di-generic-jvm:$kodein_version"
+    api "org.kodein.di:kodein-di-framework-android-core:$kodein_version"
+    api "org.kodein.di:kodein-di-framework-android-x:$kodein_version"
 
     implementation project(':utilspack')
 }

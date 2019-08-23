@@ -3,13 +3,6 @@ package com.mitsuki.utilspack.utils
 import android.content.Context
 import android.widget.Toast
 
-object ToastUtils {
+inline fun Context.toastShort(value: () -> String) = Toast.makeText(this, value(), Toast.LENGTH_SHORT).show()
 
-    fun makeText(context: Context, str: String) {
-        Toast.makeText(context, str, Toast.LENGTH_SHORT).show()
-    }
-
-    fun makeTextLong(context: Context, str: String) {
-        Toast.makeText(context, str, Toast.LENGTH_LONG).show()
-    }
-}
+inline fun Context.toastLong(value: () -> String) = Toast.makeText(this, value(), Toast.LENGTH_LONG).show()

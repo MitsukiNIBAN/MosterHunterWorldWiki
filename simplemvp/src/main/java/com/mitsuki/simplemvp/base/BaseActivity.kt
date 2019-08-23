@@ -7,46 +7,50 @@ import android.view.InflateException
 import android.view.MotionEvent
 import com.mitsuki.utilspack.utils.AppManager
 import com.mitsuki.utilspack.utils.SoftInputHelper
-import com.mitsuki.utilspack.utils.ToastUtils
+import com.mitsuki.utilspack.utils.toastShort
+import org.kodein.di.Kodein
+import org.kodein.di.KodeinAware
+import org.kodein.di.android.closestKodein
+import org.kodein.di.android.x.closestKodein
+import org.kodein.di.generic.kcontext
 
-abstract class BaseActivity<T : BasePresenter<*, *>> : AppCompatActivity(), IBaseActivity, IView {
+abstract class BaseActivity<T : BasePresenter<*, *>> : AppCompatActivity(), KodeinAware, IView,
+        IBaseActivity {
     val TAG = this.javaClass.simpleName
-    var mPresenter: T? = null
+
+    abstract val mPresenter: T?
+    abstract val kodeinModule: Kodein.Module
+
+    private val parentKodein by closestKodein()
+    override val kodeinContext = kcontext<AppCompatActivity>(this)
+    override val kodein: Kodein = Kodein.lazy {
+        extend(parentKodein)
+        import(kodeinModule)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         try {
             val layoutResID = initView(savedInstanceState)
-            if (layoutResID != 0) {
-                setContentView(layoutResID)
-            }
+            if (layoutResID != 0) setContentView(layoutResID)
         } catch (e: Exception) {
             if (e is InflateException) throw e
             e.printStackTrace()
         }
 
-        mPresenter = myPresenter()
         initData(savedInstanceState)
     }
 
     /*****************************************************************************************************************/
-    override fun showLoading() {
-    }
+    override fun showLoading() {}
 
-    override fun hideLoading() {
-    }
+    override fun hideLoading() {}
 
-    override fun showMessage(message: String) {
-        ToastUtils.makeText(this, message)
-    }
+    override fun showMessage(message: String) = toastShort { message }
 
-    override fun launchActivity(intent: Intent) {
-        AppManager.startActivity(intent)
-    }
+    override fun launchActivity(intent: Intent) = AppManager.startActivity(intent)
 
-    override fun killMyself() {
-        finish()
-    }
+    override fun killMyself() = finish()
 
     /*****************************************************************************************************************/
     override fun onDestroy() {
@@ -70,11 +74,6 @@ abstract class BaseActivity<T : BasePresenter<*, *>> : AppCompatActivity(), IBas
     }
 
     /*****************************************************************************************************************/
-    open fun myPresenter(): T? = null
-
-    /*****************************************************************************************************************/
-
-
     private fun initTitleBar() {
 
         //        if (findViewById(R.id.toolbar) != null) {
