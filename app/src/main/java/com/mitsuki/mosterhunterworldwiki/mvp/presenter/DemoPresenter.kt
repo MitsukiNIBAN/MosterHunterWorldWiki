@@ -14,6 +14,7 @@ class DemoPresenter(kodein: Kodein) : BasePresenter<DemoContract.View, DemoContr
 
     fun test() {
         subject.onNext(0)
+//        mView.testShow(mModel.getStr())
     }
 
 }

@@ -22,7 +22,6 @@ abstract class BaseFragment<T : BasePresenter<*, *>> : Fragment(), IView, Kodein
     abstract val kodeinModule: Kodein.Module
 
     private val parentKodein by closestKodein()
-    override val kodeinContext = kcontext<Fragment>(this)
     override val kodein: Kodein = Kodein.lazy {
         extend(parentKodein)
         import(kodeinModule)

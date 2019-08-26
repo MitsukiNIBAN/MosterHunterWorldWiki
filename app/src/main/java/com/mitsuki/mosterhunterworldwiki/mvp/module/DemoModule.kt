@@ -18,5 +18,5 @@ val demoKodeinModule = Kodein.Module(DEMO_MODULE_TAG) {
     bind<DemoContract.View>() with scoped<DemoActivity>(AndroidLifecycleScope).singleton { context }
     bind<DemoPresenter>() with scoped<DemoActivity>(AndroidLifecycleScope).singleton { DemoPresenter(kodein) }
 
-//    bind<PublishSubject<Int>>() with singleton { PublishSubject.create<Int>() }
+    bind<PublishSubject<Int>>() with singleton { PublishSubject.create<Int>() }
 }

@@ -25,7 +25,7 @@ class InnerFragment : BaseFragment<InnerPresenter>(), InnerContract.View {
 
     @SuppressLint("CheckResult")
     override fun initData(savedInstanceState: Bundle?) {
-//        subject.filter { it == 0 }.subscribe { showMessage("这里是fragment，收到了来自activity的消息") }
+        subject.filter { it == 0 }.subscribe { showMessage("这里是fragment，收到了来自activity的消息") }
 
         fragmentBtn.setOnClickListener { mPresenter.sendStr() }
     }

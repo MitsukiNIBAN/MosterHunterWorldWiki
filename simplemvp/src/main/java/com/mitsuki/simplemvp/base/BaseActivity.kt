@@ -22,7 +22,6 @@ abstract class BaseActivity<T : BasePresenter<*, *>> : AppCompatActivity(), Kode
     abstract val kodeinModule: Kodein.Module
 
     private val parentKodein by closestKodein()
-    override val kodeinContext = kcontext<AppCompatActivity>(this)
     override val kodein: Kodein = Kodein.lazy {
         extend(parentKodein)
         import(kodeinModule)

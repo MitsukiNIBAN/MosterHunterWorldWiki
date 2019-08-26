@@ -30,7 +30,7 @@ class DemoActivity : BaseActivity<DemoPresenter>(), DemoContract.View {
         val fra = InnerFragment()
         supportFragmentManager.beginTransaction().add(R.id.fragmentCre, fra).commitAllowingStateLoss()
 
-//        subject.filter { it == 1 }.subscribe { showMessage("这里是activity，收到了来自fragment 的消息") }
+        subject.filter { it == 1 }.subscribe { showMessage("这里是activity，收到了来自fragment 的消息") }
     }
 
 
