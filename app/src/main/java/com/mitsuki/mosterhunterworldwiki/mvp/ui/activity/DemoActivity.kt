@@ -8,6 +8,8 @@ import com.mitsuki.mosterhunterworldwiki.mvp.contract.DemoContract
 import com.mitsuki.mosterhunterworldwiki.mvp.presenter.DemoPresenter
 import com.mitsuki.mosterhunterworldwiki.mvp.ui.fragment.InnerFragment
 import com.mitsuki.simplemvp.base.BaseActivity
+import com.mitsuki.utilspack.utils.hideSoftInput
+import com.mitsuki.utilspack.utils.showSoftInput
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.activity_demo.*
 import org.kodein.di.Kodein
@@ -35,5 +37,7 @@ class DemoActivity : BaseActivity<DemoPresenter>(), DemoContract.View {
 
     override fun testShow(str: String) {
         showMessage(str)
+        showSoftInput()
+        hideSoftInput()
     }
 }
