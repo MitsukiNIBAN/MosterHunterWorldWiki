@@ -2,7 +2,6 @@ package com.mitsuki.mosterhunterworldwiki.mvp.ui.activity
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import com.mitsuki.mosterhunterworldwiki.R
 import com.mitsuki.mosterhunterworldwiki.mvp.module.demoKodeinModule
 import com.mitsuki.mosterhunterworldwiki.mvp.contract.DemoContract
@@ -30,7 +29,7 @@ class DemoActivity : BaseActivity<DemoPresenter>(), DemoContract.View {
         val fra = InnerFragment()
         supportFragmentManager.beginTransaction().add(R.id.fragmentCre, fra).commitAllowingStateLoss()
 
-        subject.filter { it == 1 }.subscribe { showMessage("这里是activity，收到了来自fragment 的消息") }
+//        subject.filter { it == 1 }.subscribe { showMessage("这里是activity，收到了来自fragment 的消息") }
     }
 
 

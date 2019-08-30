@@ -4,6 +4,7 @@ import com.mitsuki.mosterhunterworldwiki.mvp.contract.DemoContract
 import com.mitsuki.mosterhunterworldwiki.mvp.model.DemoModel
 import com.mitsuki.mosterhunterworldwiki.mvp.presenter.DemoPresenter
 import com.mitsuki.mosterhunterworldwiki.mvp.ui.activity.DemoActivity
+import com.uber.autodispose.autoDisposable
 import io.reactivex.subjects.PublishSubject
 import org.kodein.di.Kodein
 import org.kodein.di.android.x.AndroidLifecycleScope

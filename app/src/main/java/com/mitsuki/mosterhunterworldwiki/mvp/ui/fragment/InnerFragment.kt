@@ -10,6 +10,7 @@ import com.mitsuki.mosterhunterworldwiki.mvp.contract.InnerContract
 import com.mitsuki.mosterhunterworldwiki.mvp.module.innerKodeinModule
 import com.mitsuki.mosterhunterworldwiki.mvp.presenter.InnerPresenter
 import com.mitsuki.simplemvp.base.BaseFragment
+import com.uber.autodispose.autoDisposable
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.fragment_demo.*
 import org.kodein.di.Kodein
@@ -21,11 +22,17 @@ class InnerFragment : BaseFragment<InnerPresenter>(), InnerContract.View {
 
     val subject by kodein.instance<PublishSubject<Int>>()
 
-    override fun initView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View = inflater.inflate(R.layout.fragment_demo, container, false)
+    override fun initView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View = inflater.inflate(R.layout.fragment_demo, container, false)
 
     @SuppressLint("CheckResult")
     override fun initData(savedInstanceState: Bundle?) {
-        subject.filter { it == 0 }.subscribe { showMessage("这里是fragment，收到了来自activity的消息") }
+        subject.filter { it == 0 }
+            .autoDisposable(scopeProvider)
+            .subscribe { showMessage("这里是fragment，收到了来自activity的消息") }
 
         fragmentBtn.setOnClickListener { mPresenter.sendStr() }
     }

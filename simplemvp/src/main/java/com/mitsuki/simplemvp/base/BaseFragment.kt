@@ -6,8 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import com.mitsuki.utilspack.utils.AppManager
 import com.mitsuki.utilspack.utils.toastShort
+import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.closestKodein
@@ -16,7 +18,12 @@ import org.kodein.di.generic.kcontext
 
 abstract class BaseFragment<T : BasePresenter<*, *>> : Fragment(), IView, KodeinAware,
         IBaseFragment {
+
     val TAG = this.javaClass.simpleName
+
+    protected val scopeProvider: AndroidLifecycleScopeProvider by lazy {
+        AndroidLifecycleScopeProvider.from(this, Lifecycle.Event.ON_DESTROY)
+    }
 
     abstract val mPresenter: T?
     abstract val kodeinModule: Kodein.Module
