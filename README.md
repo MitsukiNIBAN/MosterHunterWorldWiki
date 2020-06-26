@@ -1,2 +1,2 @@
-# SimpleMVP
-kotlin+kodein+jetpack的简单mvp项目
+# 基本的mvp架构和mvvm架构
+已移除了不必要的封装
