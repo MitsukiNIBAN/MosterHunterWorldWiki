@@ -3,17 +3,16 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 28
-
+    compileSdkVersion rootProject.ext.android["compileSdkVersion"]
+    buildToolsVersion rootProject.ext.android["buildToolsVersion"]
 
     defaultConfig {
-        minSdkVersion 21
-        targetSdkVersion 28
+        minSdkVersion rootProject.ext.android["minSdkVersion"]
+        targetSdkVersion rootProject.ext.android["targetSdkVersion"]
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
     }
 
     buildTypes {
@@ -26,31 +25,14 @@ android {
 }
 
 dependencies {
-    def kodein_version = "6.3.3"
-    def autodispose_version = "1.2.0"
-
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation 'androidx.appcompat:appcompat:1.0.2'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.2.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    implementation dep.kotlinStdlibJdk8
+    implementation dep.appcompat
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-
-    api "io.reactivex.rxjava2:rxkotlin:2.4.0"
-    api 'io.reactivex.rxjava2:rxandroid:2.1.1'
-
-    api "org.kodein.di:kodein-di-generic-jvm:$kodein_version"
-    api "org.kodein.di:kodein-di-framework-android-core:$kodein_version"
-    api "org.kodein.di:kodein-di-framework-android-x:$kodein_version"
-
-    api "com.uber.autodispose:autodispose-ktx:$autodispose_version"
-    api "com.uber.autodispose:autodispose-android:$autodispose_version"
-    api "com.uber.autodispose:autodispose-android-ktx:$autodispose_version"
-    api "com.uber.autodispose:autodispose-android-archcomponents-ktx:$autodispose_version"
-
-    api project(':utilspack')
+    implementation dep.junit
+    androidTestImplementation dep.runner
+    androidTestImplementation dep.espresso
 }
 repositories {
     mavenCentral()
